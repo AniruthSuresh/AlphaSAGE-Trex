@@ -16,14 +16,26 @@ class AlphaPoolGFN(AlphaPool):
         target: Expression,
         ic_mut_threshold: float = 0.3,
         ssl_k: int = 3,
-        ssl_tau: float = 0.1
+        ssl_tau: float = 0.1,
+        turnover_penalty_coef: float = 0.0
     ):
         super().__init__(capacity, stock_data, target)
         self.ic_mut_threshold = ic_mut_threshold
         self.ssl_k = ssl_k  # K for k-nearest neighbors
         self.ssl_tau = ssl_tau  # Temperature parameter for similarity weight
+        self.turnover_penalty_coef = turnover_penalty_coef
         # Initialize embeddings storage with the same structure as other factor properties
         self.embeddings: List[Optional[Tensor]] = [None for _ in range(capacity + 1)]
+
+    def _compute_turnover(self, value: Tensor) -> float:
+        # L1 normalization (cross-sectionally)
+        l1_norm = value.abs().sum(dim=1, keepdim=True)
+        l1_norm[l1_norm == 0] = 1e-8
+        weights = value / l1_norm
+        
+        # Calculate mean absolute change in daily weights
+        delta_weights = (weights[1:] - weights[:-1]).abs().sum(dim=1) / 2
+        return delta_weights.mean().item()
 
     def try_new_expr(self, expr: Expression, embedding: Optional[Tensor] = None) -> Tuple[float, float]:
         value = self._normalize_by_day(expr.evaluate(self.data))
@@ -32,6 +44,12 @@ class AlphaPoolGFN(AlphaPool):
             return 0.0, 1.0
         ic_ret = np.abs(ic_ret)
         ic_mut = np.abs(ic_mut)
+        
+        # Calculate turnover and apply penalty to ic_ret if requested
+        if self.turnover_penalty_coef > 0:
+            turnover = self._compute_turnover(value)
+            penalty = self.turnover_penalty_coef * turnover
+            ic_ret = ic_ret - penalty
         
         # Check if we should add this factor to the pool
         if self.size < self.capacity:
