@@ -41,6 +41,7 @@ class AlphaPoolGFN(AlphaPool):
         value = self._normalize_by_day(expr.evaluate(self.data))
         
         # Check raw IC. If negative, negate the expression and value so it becomes a long signal.
+        from alphagen.utils.correlation import batch_pearsonr
         raw_ic = batch_pearsonr(value, self.target).mean().item()
         if raw_ic < 0:
             from alphagen.data.expression import Mul, Constant
