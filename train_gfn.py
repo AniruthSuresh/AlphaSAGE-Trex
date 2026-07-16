@@ -157,10 +157,13 @@ def train(args):
     data = StockData(instrument=args.instrument, start_time='2010-01-01', end_time='2016-12-31', qlib_path=QLIB_PATH)
     data_test = StockData(instrument=args.instrument, start_time='2018-01-01', end_time='2020-12-31', qlib_path=QLIB_PATH)
     close = Feature(FeatureType.CLOSE)
-    target = Ref(close, -20) / close - 1
+    if args.target_days == 1:
+        target = Ref(close, -1) / close - 1
+    else:
+        target = Ref(close, -args.target_days) / close - 1
     
     # Initialize AlphaPoolGFN
-    pool = AlphaPoolGFN(capacity=args.pool_capacity, stock_data=data, target=target)
+    pool = AlphaPoolGFN(capacity=args.pool_capacity, stock_data=data, target=target, turnover_penalty_coef=args.turnover_penalty_coef)
 
     # Initialize model
     n_tokens = len(FEATURES) + len(OPERATORS) + len(DELTA_TIMES) + len(CONSTANTS)
@@ -288,6 +291,8 @@ if __name__ == '__main__':
     parser.add_argument('--nov_weight', type=float, default=0.5, help='Initial weight for novelty reward (will decay during training)')
     parser.add_argument('--weight_decay_type', type=str, default='linear', choices=['linear', 'exponential', 'polynomial'], help='Type of weight decay to apply')
     parser.add_argument('--final_weight_ratio', type=float, default=0.0, help='Final weight as ratio of initial weight (e.g., 0.1 means decay to 10% of initial)')
+    parser.add_argument('--target_days', type=int, default=20, help='Holding period for target returns (e.g., 1 for daily, 20 for 20-day returns)')
+    parser.add_argument('--turnover_penalty_coef', type=float, default=0.0, help='Coefficient for penalizing turnover in the IC reward (e.g., 0.01)')
     args = parser.parse_args()
     print(args)
     train(args)
