@@ -70,15 +70,19 @@ class GFNLogger:
         for i in range(n):
             expr = state['exprs'][i]
             expr_str = str(expr)
-            ic_ret = state['ics_ret'][i]
+            ic_ret = state['ics_ret'][i] # This is the penalized IC
+
+            # Calculate raw train IC
+            value_train = self.pool._normalize_by_day(expr.evaluate(self.pool.data))
+            ic_raw = batch_pearsonr(value_train, self.pool.target).mean().item()
 
             # Calculate test IC
             value_test = self.pool._normalize_by_day(expr.evaluate(self.test_data))
             ic_test = batch_pearsonr(value_test, self.target_test).mean().item()
 
-            print(f'> Alpha #{i}: ic={ic_ret:.4f}, test_ic={ic_test:.4f}, expr={expr_str}')
+            print(f'> Alpha #{i}: raw_ic={ic_raw:.4f}, penalized_ic={ic_ret:.4f}, test_ic={ic_test:.4f}, expr={expr_str}')
         if self.pool.size > 0:
-            print(f'>> Best single ic: {np.max(self.pool.single_ics[:self.pool.size]):.4f}')
+            print(f'>> Best single penalized_ic: {np.max(self.pool.single_ics[:self.pool.size]):.4f}')
         print('---------------------------------------------')
 
     def close(self):

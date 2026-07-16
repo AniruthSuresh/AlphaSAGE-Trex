@@ -104,6 +104,28 @@ python train_gfn.py \
 - `--ssl_weight 1.0`: Self-supervised learning weight for structure awareness
 - `--nov_weight 0.3`: Novelty reward weight for diversity
 
+With the turnover pen :
+
+```Shell
+pdm run python train_gfn.py \
+    --seed 0 \
+    --instrument csi300 \
+    --pool_capacity 50 \
+    --log_freq 500 \
+    --update_freq 64 \
+    --n_episodes 10000 \
+    --encoder_type gnn \
+    --entropy_coef 0.01 \
+    --entropy_temperature 1.0 \
+    --mask_dropout_prob 1.0 \
+    --ssl_weight 1.0 \
+    --nov_weight 0.3 \
+    --weight_decay_type linear \
+    --final_weight_ratio 0.0 \
+    --target_days 1 \
+    --turnover_penalty_coef 0.001
+```
+
 ### Stage 2: Evaluate and Combine Alpha Pool
 
 Following [AlphaForge](https://github.com/DulyHao/AlphaForge), we use adaptive combination to create the final alpha portfolio:
