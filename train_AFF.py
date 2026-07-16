@@ -39,7 +39,7 @@ def numpy2onehot(integer_matrix,max_num_categories=None,min_num_categories=None)
 
 from typing import List
 
-def blds_list_to_tensor(blds_list,weights_list:List[int]):
+def blds_list_to_tensor(blds_list,weights_list:List[float]):
     assert len(blds_list) == len(weights_list)
 
     x_numpy_list = []
@@ -322,7 +322,8 @@ def run(args):
                                 randomly = False,
                                 random_method = random_call,max_iter = 100)
 
-        lengh_s = {"train":len(blds_in_train)} #
+        assert blds_in_train is not None, "blds_in_train cannot be None"
+        lengh_s = {"train":len(blds_in_train)} 
         lengh_s['new']=len(coll.blds)
         coll.blds = coll.blds + blds_in_train
         coll.blds.drop_duplicated()
