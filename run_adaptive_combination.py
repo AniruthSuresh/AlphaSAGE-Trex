@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 import torch 
 import os
 from gan.utils import load_pickle
@@ -215,7 +216,7 @@ def load_alpha_pool(raw) -> Tuple[List[Expression], List[float]]:
     exprs = [eval(expr_raw.replace('open', 'open_').replace('$', '')) for expr_raw in exprs_raw]
     return exprs, weights
 
-def load_alpha_pool_by_path(path: str) -> Tuple[List[Expression], List[float]]:
+def load_alpha_pool_by_path(path: str) -> Tuple[List[Expression], Union[List[float], None]]:
     if path.endswith('.json'):
         with open(path, encoding='utf-8') as f:
                 raw = json.load(f)
@@ -290,9 +291,9 @@ def run(args):
 
     os.environ["CUDA_VISIBLE_DEVICES"] = str(args.cuda)
     if args.instruments == 'sp500':
-        QLIB_PATH = '/your_path/data/qlib_data/us_data_qlib'
+        QLIB_PATH = './data/qlib_data/us_data_qlib'
     else:
-        QLIB_PATH = '/your_path/data/qlib_data/cn_data_rolling'
+        QLIB_PATH = './data/qlib_data/cn_data_rolling'
     # 1. Define Target and Load Data
     close = Feature(FeatureType.CLOSE)
     target = Ref(close, -args.label_days) / close - 1

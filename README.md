@@ -1,4 +1,4 @@
-# <p align="center"> AlphaSAGE: Structure-Aware Alpha Mining via GFlowNets for Robust Exploration</p>
+# 
 
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
@@ -16,7 +16,7 @@ This repository contains the official implementation of **AlphaSAGE** (Structure
 The automated mining of predictive signals, or alphas, is a central challenge in quantitative finance. While Reinforcement Learning (RL) has emerged as a promising paradigm for generating formulaic alphas, existing frameworks are fundamentally hampered by three interconnected issues:
 
 1. **Reward Sparsity**: Meaningful feedback is only available upon completion of a full formula, leading to inefficient and unstable exploration
-2. **Inadequate Representation**: Sequential representations fail to capture the mathematical structure that determines an alpha's behavior  
+2. **Inadequate Representation**: Sequential representations fail to capture the mathematical structure that determines an alpha's behavior
 3. **Mode Collapse**: Standard RL objectives drive policies towards single optimal modes, contradicting the need for diverse, non-correlated alpha portfolios
 
 ## 🚀 Key Innovations
@@ -24,16 +24,19 @@ The automated mining of predictive signals, or alphas, is a central challenge in
 AlphaSAGE addresses these challenges through three cornerstone innovations:
 
 ### 1. Structure-Aware Encoder
+
 - **Relational Graph Convolutional Network (RGCN)** based encoder that captures the inherent mathematical structure of alpha expressions
 - Preserves semantic relationships between operators and operands
 - Enables better understanding of formula behavior and properties
 
-### 2. Generative Flow Networks (GFlowNets) Framework  
+### 2. Generative Flow Networks (GFlowNets) Framework
+
 - Replaces traditional RL with GFlowNets for diverse exploration
 - Naturally supports multi-modal sampling for generating diverse alpha portfolios
 - Avoids mode collapse inherent in standard policy gradient methods
 
 ### 3. Dense Multi-Faceted Reward Structure
+
 - Provides rich, intermediate feedback throughout the generation process
 - Combines multiple evaluation criteria for comprehensive alpha assessment
 - Enables more stable and efficient learning compared to sparse reward signals
@@ -44,8 +47,9 @@ The overview of AlphaSAGE is shown in the following figure:
 ## 📊 Results
 
 Empirical results demonstrate that AlphaSAGE significantly outperforms existing baselines in:
+
 - **Diversity**: Mining more diverse alpha portfolios
-- **Novelty**: Generating novel alpha expressions  
+- **Novelty**: Generating novel alpha expressions
 - **Predictive Power**: Achieving higher predictive performance
 - **Robustness**: Maintaining performance across different market conditions
 
@@ -54,8 +58,8 @@ The backtest results of AlphaSAGE is shown in the following figure:
 
 *Detailed results and analysis can be found in our paper.*
 
-
 ## 🛠 Installation
+
 We use PDM to manage the dependencies. To install PDM, please refer to the [official documentation](https://pdm-project.org/en/latest/).
 
 ```bash
@@ -67,7 +71,6 @@ pdm install
 ## 📁 Data Preparation
 
 We use the data from [Qlib](https://github.com/microsoft/qlib) to train the model. Please refer to the [official documentation](https://qlib.readthedocs.io/en/latest/?badge=latest) to download the data.
-
 
 ## 🚀 Quick Start
 
@@ -96,6 +99,7 @@ python train_gfn.py \
 ```
 
 **Key Parameters:**
+
 - `--encoder_type gnn`: Uses our structure-aware RGCN encoder
 - `--pool_capacity 50`: Maximum number of alphas to maintain in the pool
 - `--entropy_coef 0.01`: Controls exploration vs exploitation balance
@@ -146,6 +150,7 @@ python run_adaptive_combination.py \
 ```
 
 #### AlphaGen (PPO):
+
 ```bash
 # Train AlphaGen with PPO
 python train_ppo.py \
@@ -164,6 +169,7 @@ python run_adaptive_combination.py \
 ```
 
 ### Other Baselines
+
 For AlphaForge and other ML baselines, please refer to the [AlphaForge documentation](https://github.com/DulyHao/AlphaForge).
 
 ## 📄 License

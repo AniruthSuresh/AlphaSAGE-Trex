@@ -1,4 +1,4 @@
-import torch 
+import torch # pyrefly: ignore [missing-import]
 import os
 os.environ["CUDA_VISIBLE_DEVICES"]='1'
 from gan.utils import load_pickle
@@ -11,7 +11,7 @@ from gan.utils.data import get_data_by_year
 import argparse
 from datetime import datetime
 
-QLIB_PATH = '/your_path/data/qlib_data/cn_data_rolling'
+QLIB_PATH = './data/qlib_data/cn_data_rolling'
 
 def load_alpha_pool(raw) -> Tuple[List[Expression], List[float]]:
     exprs_raw = raw['exprs']

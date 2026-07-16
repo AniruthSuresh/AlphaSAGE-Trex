@@ -34,3 +34,6 @@ build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = true
+
+[errors]
+missing-import = true

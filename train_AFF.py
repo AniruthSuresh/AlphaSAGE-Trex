@@ -322,7 +322,7 @@ def run(args):
                                 randomly = False,
                                 random_method = random_call,max_iter = 100)
 
-        lengh_s = {"train":len(blds_in_train)}
+        lengh_s = {"train":len(blds_in_train)} #
         lengh_s['new']=len(coll.blds)
         coll.blds = coll.blds + blds_in_train
         coll.blds.drop_duplicated()
