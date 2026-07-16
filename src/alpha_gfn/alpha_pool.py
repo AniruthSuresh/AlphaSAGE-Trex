@@ -39,6 +39,14 @@ class AlphaPoolGFN(AlphaPool):
 
     def try_new_expr(self, expr: Expression, embedding: Optional[Tensor] = None) -> Tuple[float, float]:
         value = self._normalize_by_day(expr.evaluate(self.data))
+        
+        # Check raw IC. If negative, negate the expression and value so it becomes a long signal.
+        raw_ic = batch_pearsonr(value, self.target).mean().item()
+        if raw_ic < 0:
+            from alphagen.data.expression import Mul, Constant
+            expr = Mul(Constant(-1.0), expr)
+            value = -value
+            
         ic_ret, ic_mut = self._calc_ics(value, ic_mut_threshold=0.99)
         if ic_ret is None or ic_mut is None:
             return 0.0, 1.0
