@@ -1,3 +1,7 @@
+from _pytest.mark import Expression
+from alphagen.data.expression import Ref
+from alphagen_qlib.stock_data import FeatureType
+from alphagen.data.expression import Feature
 import torch
 import random
 import numpy as np
@@ -13,7 +17,7 @@ from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
 from alphagen.rl.env.wrapper import action2token
 
-from src.alpha_gfn.config import *
+from src.alpha_gfn.config import FEATURES, OPERATORS, DELTA_TIMES, CONSTANTS, HIDDEN_DIM, LEARNING_RATE
 from src.alpha_gfn.env.core import GFNEnvCore
 from src.alpha_gfn.modules import SequenceEncoder
 from src.alpha_gfn.alpha_pool import AlphaPoolGFN
