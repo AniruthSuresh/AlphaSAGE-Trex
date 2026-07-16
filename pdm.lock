@@ -2,10 +2,10 @@
 # It is not intended for manual editing.
 
 [metadata]
-groups = ["default"]
+groups = ["default", "dev"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:8a96285924d5a819122d6bee167490ae6baf96292a38ec332f8f2e71ae20136d"
+content_hash = "sha256:7deb9a8c58951df28bcc4163f9e5b5ab90a132a8f68c8f83169ac607b02612d4"
 
 [[metadata.targets]]
 requires_python = ">=3.11"
@@ -549,8 +549,8 @@ name = "colorama"
 version = "0.4.6"
 requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 summary = "Cross-platform colored terminal text."
-groups = ["default"]
-marker = "platform_system == \"Windows\" or sys_platform == \"win32\""
+groups = ["default", "dev"]
+marker = "sys_platform == \"win32\" or platform_system == \"Windows\""
 files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
@@ -1419,6 +1419,17 @@ dependencies = [
 files = [
     {file = "importlib_metadata-8.7.0-py3-none-any.whl", hash = "sha256:e5dd1551894c77868a30651cef00984d50e1002d06942a7101d34870c5f02afd"},
     {file = "importlib_metadata-8.7.0.tar.gz", hash = "sha256:d13b81ad223b890aa16c5471f2ac3056cf76c5f10f82d6f9292f0b415f389000"},
+]
+
+[[package]]
+name = "iniconfig"
+version = "2.3.0"
+requires_python = ">=3.10"
+summary = "brain-dead simple config-ini parsing"
+groups = ["dev"]
+files = [
+    {file = "iniconfig-2.3.0-py3-none-any.whl", hash = "sha256:f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12"},
+    {file = "iniconfig-2.3.0.tar.gz", hash = "sha256:c76315c77db068650d49c5b56314774a7804df16fee4402c1f19d6d15d8c4730"},
 ]
 
 [[package]]
@@ -3135,7 +3146,7 @@ name = "packaging"
 version = "25.0"
 requires_python = ">=3.8"
 summary = "Core utilities for Python packages"
-groups = ["default"]
+groups = ["default", "dev"]
 files = [
     {file = "packaging-25.0-py3-none-any.whl", hash = "sha256:29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484"},
     {file = "packaging-25.0.tar.gz", hash = "sha256:d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"},
@@ -3335,6 +3346,17 @@ groups = ["default"]
 files = [
     {file = "platformdirs-4.3.8-py3-none-any.whl", hash = "sha256:ff7059bb7eb1179e2685604f4aaf157cfd9535242bd23742eadc3c13542139b4"},
     {file = "platformdirs-4.3.8.tar.gz", hash = "sha256:3d512d96e16bcb959a814c9f348431070822a6496326a4be0911c40b5a74c2bc"},
+]
+
+[[package]]
+name = "pluggy"
+version = "1.6.0"
+requires_python = ">=3.9"
+summary = "plugin and hook calling mechanisms for python"
+groups = ["dev"]
+files = [
+    {file = "pluggy-1.6.0-py3-none-any.whl", hash = "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746"},
+    {file = "pluggy-1.6.0.tar.gz", hash = "sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3"},
 ]
 
 [[package]]
@@ -3650,11 +3672,27 @@ files = [
 ]
 
 [[package]]
+name = "pydantic-settings"
+version = "2.14.2"
+requires_python = ">=3.10"
+summary = "Settings management using Pydantic"
+groups = ["default"]
+dependencies = [
+    "pydantic>=2.7.0",
+    "python-dotenv>=0.21.0",
+    "typing-inspection>=0.4.0",
+]
+files = [
+    {file = "pydantic_settings-2.14.2-py3-none-any.whl", hash = "sha256:a20c97b37910b6550d5ea50fbcc2d4187defe58cd57070b73863d069419c9440"},
+    {file = "pydantic_settings-2.14.2.tar.gz", hash = "sha256:c19dd64b19097f1de80184f0cc7b0272a13ae6e170cbf240a3e27e381ed14a5f"},
+]
+
+[[package]]
 name = "pygments"
 version = "2.19.2"
 requires_python = ">=3.8"
 summary = "Pygments is a syntax highlighting package written in Python."
-groups = ["default"]
+groups = ["default", "dev"]
 files = [
     {file = "pygments-2.19.2-py3-none-any.whl", hash = "sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b"},
     {file = "pygments-2.19.2.tar.gz", hash = "sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887"},
@@ -3722,7 +3760,7 @@ files = [
 
 [[package]]
 name = "pyqlib"
-version = "0.9.6"
+version = "0.9.7"
 requires_python = ">=3.8.0"
 summary = "A Quantitative-research Platform"
 groups = ["default"]
@@ -3740,7 +3778,9 @@ dependencies = [
     "mlflow",
     "nbconvert",
     "numpy",
-    "pandas",
+    "pandas>=0.24",
+    "pyarrow",
+    "pydantic-settings",
     "pymongo",
     "python-redis-lock",
     "pyyaml",
@@ -3749,12 +3789,32 @@ dependencies = [
     "tqdm",
 ]
 files = [
-    {file = "pyqlib-0.9.6-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:b9ba3431f0d55fe635624baf3b3db799f642fda9f87afd134ba6b31f02aa9d4f"},
-    {file = "pyqlib-0.9.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:d409260ddf8f4e41359bc5db100b371c0daa432868f7afa71d559353351b79d0"},
-    {file = "pyqlib-0.9.6-cp311-cp311-win_amd64.whl", hash = "sha256:a817e331d273b9bca5cdcb2512b1ffe9dc7d91c5e70bc824a292339d2eb72f94"},
-    {file = "pyqlib-0.9.6-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:4a5724de35458e3d4a77ee8b5c855a25c943780be2f9d87cf98ca44e04a2e2ee"},
-    {file = "pyqlib-0.9.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:66aa39a02eec5148202c2b0bbb8bace0bc3b00b6a7678110aea7c284a754606c"},
-    {file = "pyqlib-0.9.6-cp312-cp312-win_amd64.whl", hash = "sha256:985becfedead64cef171885dcda5ef26e84b9fe9c9358e3b025c61d4094d841e"},
+    {file = "pyqlib-0.9.7-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:2d12fd1078dd7cba954c6ff0750391c252b6bca42e7c905eeba772308cf52bec"},
+    {file = "pyqlib-0.9.7-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:f74d6344984dce6e774a90dc0b8ef7ff78d85036aba81b4bdc7bfa9e9184ecae"},
+    {file = "pyqlib-0.9.7-cp311-cp311-win_amd64.whl", hash = "sha256:703fb3fd8a6aded26a67b1ade4432799b1a6f36ca505dabc786dd1da2166ea44"},
+    {file = "pyqlib-0.9.7-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:9adffd819e0414cf288c84f6136fb397c63eb3d4bcadf063fd1ec8f4100857fc"},
+    {file = "pyqlib-0.9.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:b50e70d127976d973c447af667b51aa2bb088d79bc0c344e295e9aadc753b86e"},
+    {file = "pyqlib-0.9.7-cp312-cp312-win_amd64.whl", hash = "sha256:dfbee9f0f3005fe805798e2a21c73b198272f1341d5f0d7771e127166faac08e"},
+]
+
+[[package]]
+name = "pytest"
+version = "9.1.1"
+requires_python = ">=3.10"
+summary = "pytest: simple powerful testing with Python"
+groups = ["dev"]
+dependencies = [
+    "colorama>=0.4; sys_platform == \"win32\"",
+    "exceptiongroup>=1; python_version < \"3.11\"",
+    "iniconfig>=1.0.1",
+    "packaging>=22",
+    "pluggy<2,>=1.5",
+    "pygments>=2.7.2",
+    "tomli>=1; python_version < \"3.11\"",
+]
+files = [
+    {file = "pytest-9.1.1-py3-none-any.whl", hash = "sha256:37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"},
+    {file = "pytest-9.1.1.tar.gz", hash = "sha256:1088fbde8f2b49d95a549a195707afa7a76a3ce9bcadc26b6d71f0ffda5fe313"},
 ]
 
 [[package]]
@@ -3769,6 +3829,17 @@ dependencies = [
 files = [
     {file = "python-dateutil-2.9.0.post0.tar.gz", hash = "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3"},
     {file = "python_dateutil-2.9.0.post0-py2.py3-none-any.whl", hash = "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"},
+]
+
+[[package]]
+name = "python-dotenv"
+version = "1.2.2"
+requires_python = ">=3.10"
+summary = "Read key-value pairs from a .env file and set them as environment variables"
+groups = ["default"]
+files = [
+    {file = "python_dotenv-1.2.2-py3-none-any.whl", hash = "sha256:1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a"},
+    {file = "python_dotenv-1.2.2.tar.gz", hash = "sha256:2c371a91fbd7ba082c2c1dc1f8bf89ca22564a087c2c287cd9b662adde799cf3"},
 ]
 
 [[package]]

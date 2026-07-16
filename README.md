@@ -1,5 +1,3 @@
-# 
-
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
   <img src="https://img.shields.io/badge/Python-3.11+-green.svg" alt="Python">
@@ -56,7 +54,7 @@ Empirical results demonstrate that AlphaSAGE significantly outperforms existing 
 The backtest results of AlphaSAGE is shown in the following figure:
 ![backtest](img/backtest.png)
 
-*Detailed results and analysis can be found in our paper.*
+_Detailed results and analysis can be found in our paper._
 
 ## 🛠 Installation
 
@@ -158,7 +156,7 @@ python train_ppo.py \
     --pool 20 \
     --seed 0
 
-# Evaluate AlphaGen results  
+# Evaluate AlphaGen results
 python run_adaptive_combination.py \
     --expressions_file results_dir \
     --instruments csi300 \

@@ -88,10 +88,17 @@ class StockData:
         cal: np.ndarray = D.calendar(freq=self.freq)
         start_index = cal.searchsorted(pd.Timestamp(self._start_time))  # type: ignore
         end_index = cal.searchsorted(pd.Timestamp(self._end_time))  # type: ignore
-        real_start_time = cal[start_index - self.max_backtrack_days]
-        if cal[end_index] != pd.Timestamp(self._end_time):
+        
+        real_start_idx = max(0, start_index - self.max_backtrack_days)
+        real_start_time = cal[real_start_idx]
+        
+        if end_index >= len(cal):
+            end_index = len(cal) - 1
+        elif cal[end_index] != pd.Timestamp(self._end_time):
             end_index -= 1
-        real_end_time = cal[end_index + self.max_future_days]
+            
+        real_end_idx = min(end_index + self.max_future_days, len(cal) - 1)
+        real_end_time = cal[real_end_idx]
         result =  (QlibDataLoader(config=exprs,freq=self.freq)  # type: ignore
                 .load(self._instrument, real_start_time, real_end_time))
         return result
@@ -105,7 +112,7 @@ class StockData:
         df = self._load_exprs(features)
         self.df_bak = df
         # print(df)
-        df = df.stack().unstack(level=1)
+        df = df.stack(dropna=False).unstack(level=1)
         dates = df.index.levels[0]                                      # type: ignore
         stock_ids = df.columns
         values = df.values

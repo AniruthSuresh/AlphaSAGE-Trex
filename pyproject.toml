@@ -11,7 +11,7 @@ dependencies = [
     "gymnasium>=1.2.0",
     "stable-baselines3>=2.7.0",
     "pandera>=0.25.0",
-    "pyqlib>=0.9.6",
+    "pyqlib>=0.9.7",
     "baostock>=0.8.9",
     "sb3-contrib>=2.7.0",
     "opencv-python>=4.11.0.86",
@@ -37,3 +37,8 @@ distribution = true
 
 [errors]
 missing-import = true
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
