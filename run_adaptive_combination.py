@@ -4,6 +4,21 @@ import os
 from gan.utils import load_pickle
 from alphagen_generic.features import *
 from alphagen.data.expression import *
+
+# Aliases for GP expression evaluation
+Corr = TsCorr
+Cov = TsCov
+WMA = TsWMA
+EMA = TsEMA
+Std = TsStd
+Min = TsMin
+Max = TsMax
+Sum = TsSum
+Med = TsMed
+Mad = TsMad
+Delta = TsDelta
+Mean = TsMean
+Var = TsVar
 from typing import Tuple, List, Union
 import json
 import argparse

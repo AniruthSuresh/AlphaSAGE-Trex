@@ -60,6 +60,25 @@ done
 To scale GFN, you manipulate the "Diversity vs. Exploitation" levers: `entropy_coef` (randomness), `nov_weight` (bonus for weird formulas), and `target_days` (what horizon it predicts).
 
 ```bash
+# 0 : Base
+pdm run python train_gfn.py \
+    --seed 0 \
+    --instrument csi300 \
+    --pool_capacity 50 \
+    --log_freq 500 \
+    --update_freq 64 \
+    --n_episodes 10000 \
+    --encoder_type gnn \
+    --entropy_coef 0.01 \
+    --entropy_temperature 1.0 \
+    --mask_dropout_prob 1.0 \
+    --ssl_weight 1.0 \
+    --nov_weight 0.3 \
+    --weight_decay_type linear \
+    --final_weight_ratio 0.0 \
+    --target_days 1 \
+    --turnover_penalty_coef 0.001
+
 # 1. High Novelty Search (forces the AI to prioritize unique, weird structures)
 pdm run python train_gfn.py \
     --seed 101 \
@@ -109,7 +128,7 @@ python extract_top_alphas.py --file out_gp/csi300_2016_day_1/40.json --is_gp --t
 
 # Extract the top 50 alphas from a PPO or GFN run
 #[PPO]
-python extract_top_alphas.py --file data/ppo_logs/pool_50/ppo_csi300_50_0-20260719205517/ppo_csi300_50_0_20260719205517/200000_steps_pool.json --top_n 50
+python extract_top_alphas.py --file data/ppo_logs/pool_50/ppo_csi300_50_0-20260719205517/ppo_csi300_50_0_20260719205517/200704_steps_pool.json --top_n 50
 
 #[GFN]
 python extract_top_alphas.py --file data/ppo_logs/pool_50/ppo_csi300_50_0-20260719205517/ppo_csi300_50_0_20260719205517/200000_steps_pool.json --top_n 50
