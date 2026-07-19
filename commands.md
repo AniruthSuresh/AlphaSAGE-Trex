@@ -108,7 +108,11 @@ You must extract the top formulas from your raw GP or PPO/GFN outputs into a sta
 python extract_top_alphas.py --file out_gp/csi300_2016_day_1/40.json --is_gp --top_n 50
 
 # Extract the top 50 alphas from a PPO or GFN run
-python extract_top_alphas.py --file data/ppo_logs/pool_50/rl_model_20260719/200000_steps_pool.json --top_n 50
+#[PPO]
+python extract_top_alphas.py --file data/ppo_logs/pool_50/ppo_csi300_50_0-20260719205517/ppo_csi300_50_0_20260719205517/200000_steps_pool.json --top_n 50
+
+#[GFN]
+python extract_top_alphas.py --file data/ppo_logs/pool_50/ppo_csi300_50_0-20260719205517/ppo_csi300_50_0_20260719205517/200000_steps_pool.json --top_n 50
 ```
 
 *(This will generate files named `40_top50.json` or `..._pool_top50.json`)*
