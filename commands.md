@@ -1,6 +1,6 @@
 # Alpha Generation Pipeline: GP, PPO, and GFN
 
-To generate thousands of alphas, you need to understand how the three main search algorithms explore the mathematical space, and how to configure them to find *different* things.
+To generate thousands of alphas, you need to understand how the three main search algorithms explore the mathematical space, and how to configure them to find _different_ things.
 
 ## 1. Genetic Programming (GP)
 
@@ -11,9 +11,13 @@ To generate thousands of alphas, you need to understand how the three main searc
 
 Run these to brute-force different branches of the evolutionary tree. The key is to run many different seeds and vary the training years to find regime-specific alphas.
 
+- **Train** : up to `train_end_year`
+- **Valid** : `train_end_year + 1`
+- **Test** : `train_end_year + 2` to `train_end_year + 4`
+
 ```bash
 # Baseline run
-pdm run python train_GP.py --seed 1 --instruments csi300 --train-end-year 2020
+pdm run python train_GP.py --seed 1 --instruments csi300 --train-end-year 2016
 
 # Run across different random seeds to explore different evolutionary paths
 for seed in {1..10}; do
@@ -48,7 +52,7 @@ done
 
 ## 3. Generative Flow Networks (GFN - AlphaSAGE)
 
-**What it searches for:** GFNs are designed to *sample proportionally to the reward*. Instead of climbing to the highest peak and staying there (like PPO), a GFN learns the entire map of the reward landscape and samples from all the different peaks.
+**What it searches for:** GFNs are designed to _sample proportionally to the reward_. Instead of climbing to the highest peak and staying there (like PPO), a GFN learns the entire map of the reward landscape and samples from all the different peaks.
 **Why use it:** It explicitly searches for **diverse, high-quality portfolios**. If you want 100 alphas that are all profitable but completely uncorrelated, this is your best tool.
 
 ### GFN Generation Commands

@@ -103,18 +103,25 @@ def run(args):
     close = Feature(FeatureType.CLOSE)
     target = Ref(close, -20) / close - 1
 
+    train_start_time = '2010-01-01'
+    train_end_time = f'{args.train_end_year}-12-31'
+    valid_start_time = f'{args.train_end_year + 1}-01-01'
+    valid_end_time = f'{args.train_end_year + 1}-12-31'
+    test_start_time = f'{args.train_end_year + 2}-01-01'
+    test_end_time = f'{args.train_end_year + 4}-12-31'
+
     # You can re-implement AlphaCalculator instead of using QLibStockDataCalculator.
     data_train = StockData(instrument=args.instruments,
-                           start_time='2010-01-01',
-                           end_time='2020-12-31',
+                           start_time=train_start_time,
+                           end_time=train_end_time,
                            qlib_path = QLIB_PATH)
     data_valid = StockData(instrument=args.instruments,
-                           start_time='2021-01-01',
-                           end_time='2021-12-31',
+                           start_time=valid_start_time,
+                           end_time=valid_end_time,
                            qlib_path = QLIB_PATH)
     data_test = StockData(instrument=args.instruments,
-                          start_time='2022-01-01',
-                          end_time='2024-12-31',
+                          start_time=test_start_time,
+                          end_time=test_end_time,
                           qlib_path = QLIB_PATH)
     # calculator_train = QLibStockDataCalculator(data_train, target)
     # calculator_valid = QLibStockDataCalculator(data_valid, target)
@@ -180,5 +187,6 @@ if __name__ == '__main__':
     parser.add_argument('--instruments', type=str, default='csi300')
     parser.add_argument('--pool', type=int, default=10)
     parser.add_argument('--steps', type=int, default=200_000)
+    parser.add_argument('--train-end-year', type=int, default=2016)
     args = parser.parse_args()
     run(args)
