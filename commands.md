@@ -16,16 +16,16 @@ Run these to brute-force different branches of the evolutionary tree. The key is
 - **Test** : `train_end_year + 2` to `train_end_year + 4`
 
 ```bash
-# Baseline run
+# Baseline run (GP automatically evaluates and saves pools of sizes 10, 20, 50, and 100, so you will get the top 50 alphas by default in the JSON output!)
 pdm run python train_GP.py --seed 1 --instruments csi300 --train-end-year 2016
 
 # Run across different random seeds to explore different evolutionary paths
 for seed in {1..10}; do
-    pdm run python train_GP.py --seed $seed --instruments csi300 --train-end-year 2020
+    pdm run python train_GP.py --seed $seed --instruments csi300 --train-end-year 2016
 done
 
-# Train on a different market regime (e.g., end year 2018)
-pdm run python train_GP.py --seed 42 --instruments csi300 --train-end-year 2018
+# Train on a different market regime (e.g., end year 2014)
+pdm run python train_GP.py --seed 42 --instruments csi300 --train-end-year 2014
 ```
 
 ## 2. Proximal Policy Optimization (PPO) - Reinforcement Learning
@@ -38,15 +38,15 @@ pdm run python train_GP.py --seed 42 --instruments csi300 --train-end-year 2018
 To force PPO to find different alphas, you must change the random initialization and the pool capacity (which forces it to find more than 1 alpha).
 
 ```bash
-# Baseline run (default 200,000 steps, pool of 10)
-pdm run python train_ppo.py --seed 0 --instruments csi300 --pool 10
+# Baseline run saving the top 50 alphas (The script will save exactly 50 alphas because of --pool 50)
+pdm run python train_ppo.py --seed 0 --instruments csi300 --pool 50 --train-end-year 2016
 
-# Increase the pool size to force it to maintain 50 distinct formulas
-pdm run python train_ppo.py --seed 1 --instruments csi300 --pool 50 --steps 300000
+# Increase the steps to force it to refine the 50 distinct formulas further
+pdm run python train_ppo.py --seed 1 --instruments csi300 --pool 50 --steps 300000 --train-end-year 2016
 
-# Loop across multiple seeds to avoid falling into the same local optimum
+# Loop across multiple seeds to avoid falling into the same local optimum, always saving top 50
 for seed in {1..5}; do
-    pdm run python train_ppo.py --seed $seed --instruments csi300 --pool 20
+    pdm run python train_ppo.py --seed $seed --instruments csi300 --pool 50 --train-end-year 2016
 done
 ```
 
