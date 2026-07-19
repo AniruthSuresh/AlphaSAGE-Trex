@@ -213,7 +213,7 @@ def remove_multicollinearity_vif(x, to_pred, vif_threshold=10.0):
 def load_alpha_pool(raw) -> Tuple[List[Expression], List[float]]:
     exprs_raw = raw['exprs']
     weights = raw['weights']
-    exprs = [eval(expr_raw.replace('open', 'open_').replace('$', '')) for expr_raw in exprs_raw]
+    exprs = [eval(expr_raw.replace('open_', 'open').replace('open', 'open_').replace('$', '')) for expr_raw in exprs_raw]
     return exprs, weights
 
 def load_alpha_pool_by_path(path: str) -> Tuple[List[Expression], Union[List[float], None]]:
@@ -224,7 +224,7 @@ def load_alpha_pool_by_path(path: str) -> Tuple[List[Expression], Union[List[flo
     elif path.endswith('.csv'):
         df = pd.read_csv(path)
         exprs = df['exprs'].tolist()
-        exprs = [eval(expr_raw.replace('open', 'open_').replace('$', '')) for expr_raw in exprs if "Ensemble" not in expr_raw]
+        exprs = [eval(expr_raw.replace('open_', 'open').replace('open', 'open_').replace('$', '')) for expr_raw in exprs if "Ensemble" not in expr_raw]
         try:
             weights = df['weight'].tolist()[:-1]
         except:

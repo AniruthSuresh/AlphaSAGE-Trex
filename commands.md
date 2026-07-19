@@ -96,6 +96,36 @@ for seed in {1..5}; do
 done
 ```
 
-## Next Step: The Forge
+## Next Step: The Forge (Filtering & Evaluation)
 
-Once these commands finish, you will have directories full of JSON files containing thousands of formulas. Run them through `evaluate_trophies.py` to filter out the noise, and then combine the survivors using `run_adaptive_combination.py` to ensure they are fully orthogonal!
+Once the generation commands finish, you will have directories full of JSON files containing thousands of formulas.
+
+**Step 1: Extract the top alphas from your runs**
+You must extract the top formulas from your raw GP or PPO/GFN outputs into a standardized format.
+
+```bash
+# Extract the top 50 alphas from a GP run (Parses the cache and sorts by IC)
+python extract_top_alphas.py --file out_gp/csi300_2016_day_1/40.json --is_gp --top_n 50
+
+# Extract the top 50 alphas from a PPO or GFN run
+python extract_top_alphas.py --file data/ppo_logs/pool_50/rl_model_20260719/200000_steps_pool.json --top_n 50
+```
+
+*(This will generate files named `40_top50.json` or `..._pool_top50.json`)*
+
+**Step 2: Find the Trophy Alphas**
+Run the extracted alphas through the strict trophy evaluator. This script checks if the alphas meet the high Sharpe, low turnover, and >200 stock constraints, and then ensures they have < 50% correlation with each other.
+
+```bash
+# Evaluate the extracted alphas
+python evaluate_trophies.py --expressions_file out_gp/csi300_2016_day_1/40_top50.json --instruments csi300
+```
+
+*(If any survive, it will save them as `40_top50_trophy.json`)*
+
+**Step 3: Final Combination**
+Once you have collected all your surviving trophies from different seeds and methods, combine them to form a final orthogonal portfolio using AlphaForge:
+
+```bash
+python run_adaptive_combination.py --expressions_file your_trophy_folder/ --instruments csi300 --cuda 0 --train_end_year 2016
+```
