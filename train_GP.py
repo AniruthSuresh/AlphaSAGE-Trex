@@ -18,9 +18,7 @@ from gplearn.functions import make_function
 from gplearn.genetic import SymbolicRegressor
 from gan.utils.data import get_data_by_year
 from datetime import datetime
-
-QLIB_PATH = '/your_path/data/qlib_data/us_data_qlib'
-
+QLIB_PATH = './data/qlib_data/cn_data_rolling'
 def _metric(x, y, w):
     key = y[0]
 
