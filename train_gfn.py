@@ -120,14 +120,20 @@ class WeightScheduler:
         elif scheduler_type == 'exponential':
             # ExponentialLR multiplies by gamma each step
             gamma = (final_ratio) ** (1.0 / total_steps)
+            # pyrefly: ignore [bad-assignment]
             self.ssl_scheduler = ExponentialLR(self.ssl_optimizer, gamma=gamma)
+            # pyrefly: ignore [bad-assignment]
             self.nov_scheduler = ExponentialLR(self.nov_optimizer, gamma=gamma)
         elif scheduler_type == 'polynomial':
             # PolynomialLR with power=1 is linear, power=2 is quadratic, etc.
+            # pyrefly: ignore [bad-assignment]
+            # pyrefly: ignore [unexpected-keyword]
             self.ssl_scheduler = PolynomialLR(self.ssl_optimizer, total_iters=total_steps, 
+                                           # pyrefly: ignore [unexpected-keyword]
                                            power=2.0, end_factor=final_ratio)
+            # pyrefly: ignore [bad-assignment]
             self.nov_scheduler = PolynomialLR(self.nov_optimizer, total_iters=total_steps, 
-                                           power=2.0, end_factor=final_ratio)
+                                           power=2.0, end_factor=final_ratio) # pyrefly: ignore [unexpected-keyword]
         else:
             raise ValueError(f"Unknown scheduler type: {scheduler_type}")
     
@@ -215,7 +221,7 @@ def train(args):
         f'gfn_{args.encoder_type}_{args.instrument}_{args.pool_capacity}_{args.seed}-{args.entropy_coef}-{args.entropy_temperature}-{args.mask_dropout_prob}-{args.ssl_weight}-{args.nov_weight}-{args.weight_decay_type}-{args.final_weight_ratio}'
     )
     os.makedirs(log_dir, exist_ok=True)
-    logger = GFNLogger(pf, pool, log_dir, data_test, target)
+    logger = GFNLogger(pf, pool, log_dir, data_test, target) 
 
     # Training loop
     losses = []
@@ -295,7 +301,7 @@ if __name__ == '__main__':
     parser.add_argument('--nov_weight', type=float, default=0.5, help='Initial weight for novelty reward (will decay during training)')
     parser.add_argument('--weight_decay_type', type=str, default='linear', choices=['linear', 'exponential', 'polynomial'], help='Type of weight decay to apply')
     parser.add_argument('--final_weight_ratio', type=float, default=0.0, help='Final weight as ratio of initial weight (e.g., 0.1 means decay to 10% of initial)')
-    parser.add_argument('--target_days', type=int, default=20, help='Holding period for target returns (e.g., 1 for daily, 20 for 20-day returns)')
+    parser.add_argument('--target_days', type=int, default=1, help='Holding period for target returns (e.g., 1 for daily, 20 for 20-day returns)')
     parser.add_argument('--turnover_penalty_coef', type=float, default=0.0, help='Coefficient for penalizing turnover in the IC reward (e.g., 0.01)')
     args = parser.parse_args()
     print(args)

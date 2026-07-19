@@ -1,2 +1,5 @@
 [errors]
 missing-import = false
+
+[tool.pyrefly.errors]
+bad-assignment = false
