@@ -122,6 +122,7 @@ Once the generation commands finish, you will have directories full of JSON file
 **Step 1: Extract the top alphas from your runs**
 You must extract the top formulas from your raw GP or PPO/GFN outputs into a standardized format.
 
+
 ```bash
 # Extract the top 50 alphas from a GP run (Parses the cache and sorts by IC)
 python extract_top_alphas.py --file out_gp/csi300_2016_day_1/40.json --is_gp --top_n 50
@@ -133,6 +134,7 @@ python extract_top_alphas.py --file data/ppo_logs/pool_50/ppo_csi300_50_0-202607
 #[GFN]
 python extract_top_alphas.py --file data/ppo_logs/pool_50/ppo_csi300_50_0-20260719205517/ppo_csi300_50_0_20260719205517/200000_steps_pool.json --top_n 50
 ```
+
 
 *(This will generate files named `40_top50.json` or `..._pool_top50.json`)*
 
